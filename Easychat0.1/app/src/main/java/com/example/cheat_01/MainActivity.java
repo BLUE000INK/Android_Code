@@ -20,11 +20,14 @@ public class MainActivity extends AppCompatActivity {
     private UsermsgAdapter mUserWorldMsgAdapter;
     private EditText mEditTextUserWordMsg;
     private List<Usermsg> mUserWorldMsgList;
-    private static final String TAG= "My_Log";
+    private static final String TAG = "My_Log";
+    private static final String tag = "activity_log";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.v(tag,"onCreat()");
 
         mEditTextUserWordMsg = findViewById(R.id.edittext_user_msg);
         mUserWorldMsgList = new ArrayList<>();
@@ -35,6 +38,42 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mUserWorldMsgAdapter);
 
+    }
+
+    @Override
+    protected void onStart() {
+        Log.v(tag,"onStart()");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.v(tag,"onResume()");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.v(tag,"onPause()");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.v(tag,"onStop()");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.v(tag,"onDestory()");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.v(tag,"onRestart()");
+        super.onRestart();
     }
 
     public void sendClick(View view) {
