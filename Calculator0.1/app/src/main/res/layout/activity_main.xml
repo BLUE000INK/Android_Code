@@ -251,6 +251,7 @@
         app:layout_constraintLeft_toRightOf="@id/btn_op_hanshu"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/button_num_style"/>
+
     <Button
         android:id="@+id/btn_op_CE"
         android:layout_width="wrap_content"
@@ -260,6 +261,6 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@id/btn_op_left_k"
         app:layout_constraintLeft_toLeftOf="@id/btn_op_left_k"
-        android:background="#dd001b"
+        android:background="@drawable/button_num_style"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

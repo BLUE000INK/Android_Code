@@ -3,6 +3,8 @@ package com.example.calculator01;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,26 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_esc,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_help:
+                Toast.makeText(this, "这是帮助！", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_exit:
+                //获取当前进程，并关闭
+                android.os.Process.killProcess(android.os.Process.myPid());
+                break;
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
