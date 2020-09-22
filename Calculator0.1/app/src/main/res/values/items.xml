@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items_hanshu">
+        <item>sin</item>
+        <item>cos</item>
+        <item>tan</item>
+        <item>n^2</item>
+        <item>n^x</item>
+        <item>n!</item>
+    </string-array>
+
+    <string-array name="items_change">
+        <item>转为分米</item>
+        <item>转为米</item>
+        <item>转为英里</item>
+        <item>转为美元</item>
+        <item>转为2进制</item>
+        <item>转为8进制</item>
+    </string-array>
+</resources>
