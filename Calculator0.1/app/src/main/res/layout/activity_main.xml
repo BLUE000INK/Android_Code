@@ -226,30 +226,7 @@
         android:textStyle="bold"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@id/btn_num_8"
-        app:layout_constraintLeft_toRightOf="@id/btn_op_left_k"
-        app:layout_constraintRight_toLeftOf="@id/btn_op_hanshu"
-        android:background="@drawable/button_num_style"/>
-    <Button
-        android:id="@+id/btn_op_hanshu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="函数"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_num_9"
-        app:layout_constraintLeft_toRightOf="@id/btn_op_right_k"
-        app:layout_constraintRight_toLeftOf="@id/btn_op_change"
-        android:background="@drawable/button_num_style"/>
-    <Button
-        android:id="@+id/btn_op_change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="转换"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_op_add"
-        app:layout_constraintLeft_toRightOf="@id/btn_op_hanshu"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/btn_num_8"
         android:background="@drawable/button_num_style"/>
 
     <Button
@@ -262,5 +239,24 @@
         app:layout_constraintBottom_toTopOf="@id/btn_op_left_k"
         app:layout_constraintLeft_toLeftOf="@id/btn_op_left_k"
         android:background="@drawable/button_num_style"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_hanshu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/btn_op_right_k"
+        app:layout_constraintTop_toTopOf="@id/btn_op_right_k"
+        app:layout_constraintLeft_toLeftOf="@id/btn_num_9"
+        app:layout_constraintRight_toRightOf="@id/btn_num_9"
+        />
+    <Spinner
+        android:id="@+id/spinner_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/btn_op_right_k"
+        app:layout_constraintTop_toTopOf="@id/btn_op_right_k"
+        app:layout_constraintLeft_toLeftOf="@id/btn_op_add"
+        app:layout_constraintRight_toRightOf="@id/btn_op_add"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -210,6 +213,44 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 min_text.setText("");
                 max_text.setText("");
+            }
+        });
+
+
+        //下拉列表adapter定义
+        Spinner spinner_hanshu = findViewById(R.id.spinner_hanshu);
+        ArrayAdapter<CharSequence> adapter_hanshu = ArrayAdapter.createFromResource(this,R.array.items_hanshu,android.R.layout.simple_spinner_item);
+        adapter_hanshu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_hanshu.setAdapter(adapter_hanshu);
+
+        Spinner spinner_change = findViewById(R.id.spinner_change);
+        ArrayAdapter<CharSequence> adapter_change = ArrayAdapter.createFromResource(this,R.array.items_change,android.R.layout.simple_spinner_item);
+        adapter_change.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_change.setAdapter(adapter_change);
+        //下拉列表事件
+        spinner_hanshu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i >= 0)
+                    Toast.makeText(MainActivity.this,adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner_change.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i >= 0)
+                    Toast.makeText(MainActivity.this,adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
