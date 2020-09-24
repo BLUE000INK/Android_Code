@@ -241,6 +241,19 @@
         android:background="@drawable/button_num_style"
         />
 
+    <Button
+        android:id="@+id/btn_op_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《—"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_op_right_k"
+        app:layout_constraintLeft_toLeftOf="@id/btn_op_right_k"
+        app:layout_constraintRight_toRightOf="@id/btn_op_right_k"
+        android:background="@drawable/button_num_style"
+        />
+
     <Spinner
         android:id="@+id/spinner_hanshu"
         android:layout_width="wrap_content"

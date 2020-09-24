@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn_op_result = findViewById(R.id.btn_op_result);
         Button btn_op_CE = findViewById(R.id.btn_op_CE);
+        Button btn_op_back = findViewById(R.id.btn_op_back);
 
         btn_num_0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,9 +217,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_op_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(max_text.getText().toString().length()>0)
+                    max_text.setText(max_text.getText().toString().substring(0,max_text.getText().toString().length()-1));
+            }
+        });
+
 
         //下拉列表adapter定义
-        Spinner spinner_hanshu = findViewById(R.id.spinner_hanshu);
+        final Spinner spinner_hanshu = findViewById(R.id.spinner_hanshu);
         ArrayAdapter<CharSequence> adapter_hanshu = ArrayAdapter.createFromResource(this,R.array.items_hanshu,android.R.layout.simple_spinner_item);
         adapter_hanshu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_hanshu.setAdapter(adapter_hanshu);
@@ -231,8 +240,38 @@ public class MainActivity extends AppCompatActivity {
         spinner_hanshu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i >= 0)
-                    Toast.makeText(MainActivity.this,adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_LONG).show();
+                switch (i){
+                    case 1:
+                        min_text.setText("sin("+max_text.getText()+"`) = "+Math.sin(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                        break;
+                    case 2:
+                        min_text.setText("cos("+max_text.getText()+"`) = "+Math.cos(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                        break;
+                    case 3:
+                        min_text.setText("tan("+max_text.getText()+"`) = "+Math.tan(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                        break;
+                    case 4:
+                        min_text.setText("asin("+max_text.getText()+"`) = "+Math.asin(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                        break;
+                    case 5:
+                        min_text.setText("acos("+max_text.getText()+"`) = "+Math.acos(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                        break;
+                    case 6:
+                        min_text.setText("atan("+max_text.getText()+"`) = "+Math.atan(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                        break;
+                    case 7:
+                        min_text.setText(max_text.getText()+"^2 = "+Math.pow(Double.parseDouble(max_text.getText().toString()),2));
+                        break;
+                    case 8:
+                        min_text.setText(max_text.getText()+"! = "+recursion(Integer.parseInt(max_text.getText().toString())));
+                        break;
+                    case 9:
+                        min_text.setText(max_text.getText()+"开根号 = "+Math.sqrt(Double.parseDouble(max_text.getText().toString())));
+                        break;
+                    default:
+                        break;
+
+                }
             }
 
             @Override
@@ -244,8 +283,25 @@ public class MainActivity extends AppCompatActivity {
         spinner_change.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i >= 0)
-                    Toast.makeText(MainActivity.this,adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_LONG).show();
+                switch (i){
+                    case 1:
+                        min_text.setText(max_text.getText()+"米 = "+ Float.parseFloat(max_text.getText().toString())* 10 + "分米");
+                        break;
+                    case 2:
+                        min_text.setText(max_text.getText()+"立方米 = "+ Float.parseFloat(max_text.getText().toString())* 1000 + "立方分米");
+                        break;
+                    case 3:
+                        min_text.setText(max_text.getText()+"人民币 = "+ Float.parseFloat(max_text.getText().toString())*0.1 + "美元");
+                        break;
+                    case 4:
+                        min_text.setText(max_text.getText()+" = "+ Float.parseFloat(max_text.getText().toString())*0.1 + "美元");
+                        break;
+                    case 5:
+
+                    default:
+                        break;
+                }
+
             }
 
             @Override
@@ -253,5 +309,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public static int recursion(int num){//利用递归计算阶乘
+        int sum=1;
+        if(num==1){
+            return 1;//根据条件,跳出循环
+        }else{
+            sum=num * recursion(num-1);//运用递归计算
+            return sum;
+        }
     }
 }
