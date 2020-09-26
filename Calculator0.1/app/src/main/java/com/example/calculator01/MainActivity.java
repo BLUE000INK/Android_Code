@@ -295,15 +295,19 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         min_text.setText("立方米转化");
-                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 1000000 +"  厘米");
-                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 1000 + "  分米");
-                        change_3.setText(Float.parseFloat(max_text.getText().toString())* 3 +  "    尺");
+                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 1000000 +" 立方厘米");
+                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 1000 + "   立方分米");
                         break;
                     case 3:
-                        min_text.setText(max_text.getText()+"人民币 = "+ Float.parseFloat(max_text.getText().toString())*0.1 + "美元");
+                        min_text.setText("人民币转化");
+                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 0.1466 +  "   美元");
+                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 15.4793 + "   日元");
                         break;
                     case 4:
-                        min_text.setText(max_text.getText()+" = "+ Float.parseFloat(max_text.getText().toString())*0.1 + "美元");
+                        min_text.setText("2进制转化");
+                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 100 +"   8进制");
+                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 10 + "  10进制");
+                        change_3.setText(Float.parseFloat(max_text.getText().toString())* 3 +  "  16进制");
                         break;
                     case 5:
 
