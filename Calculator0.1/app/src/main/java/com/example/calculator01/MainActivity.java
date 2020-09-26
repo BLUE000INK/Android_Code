@@ -374,8 +374,8 @@ public class MainActivity extends AppCompatActivity {
                         min_text.setText("10进制转化");
                         try{
                             change_1.setText(Integer.toBinaryString(Integer.valueOf(max_text.getText().toString(),10)) +"--->2进制 ");
-                            change_2.setText(Integer.toOctalString(max_text.getText().toString(),2) +                       "--->8进制");
-                            change_3.setText(Integer.toHexString(Integer.valueOf(max_text.getText().toString(),2)) +  "--->16进制");
+                            change_2.setText(Integer.toOctalString(Integer.valueOf(max_text.getText().toString(),10)) + "---->8进制");
+                            change_3.setText(Integer.toHexString(Integer.valueOf(max_text.getText().toString(),10)) +  "--->16进制");
                             break;
                         } catch (NumberFormatException e) {
                             Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
