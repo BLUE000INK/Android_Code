@@ -261,15 +261,13 @@
         app:layout_constraintBottom_toBottomOf="@id/btn_op_right_k"
         app:layout_constraintTop_toTopOf="@id/btn_op_right_k"
         app:layout_constraintLeft_toLeftOf="@id/btn_num_9"
-        app:layout_constraintRight_toRightOf="@id/btn_num_9"
         />
     <Spinner
         android:id="@+id/spinner_change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/btn_op_right_k"
-        app:layout_constraintTop_toTopOf="@id/btn_op_right_k"
-        app:layout_constraintLeft_toLeftOf="@id/btn_op_add"
-        app:layout_constraintRight_toRightOf="@id/btn_op_add"
+        app:layout_constraintBottom_toBottomOf="@id/btn_op_back"
+        app:layout_constraintTop_toTopOf="@id/btn_op_back"
+        app:layout_constraintLeft_toLeftOf="@id/btn_num_9"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
