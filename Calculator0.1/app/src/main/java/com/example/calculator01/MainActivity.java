@@ -206,19 +206,18 @@ public class MainActivity extends AppCompatActivity {
                     max_text.setText(Float.toString(result));
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this,"算式错误！",Toast.LENGTH_LONG).show();
+                    min_text.setText("");
+                    max_text.setText("");
+                    change_1.setText("");
+                    change_2.setText("");
+                    change_3.setText("");
                     e.printStackTrace();
                 }
 
             }
         });
 
-        btn_op_CE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                min_text.setText("");
-                max_text.setText("");
-            }
-        });
+
 
         btn_op_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         adapter_hanshu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_hanshu.setAdapter(adapter_hanshu);
 
-        Spinner spinner_change = findViewById(R.id.spinner_change);
+        final Spinner spinner_change = findViewById(R.id.spinner_change);
         ArrayAdapter<CharSequence> adapter_change = ArrayAdapter.createFromResource(this,R.array.items_change,android.R.layout.simple_spinner_item);
         adapter_change.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_change.setAdapter(adapter_change);
@@ -289,26 +288,71 @@ public class MainActivity extends AppCompatActivity {
                 switch (i){
                     case 1:
                         min_text.setText("米转化");
-                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 100 +"  厘米");
-                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 10 + "  分米");
-                        change_3.setText(Float.parseFloat(max_text.getText().toString())* 3 +  "    尺");
-                        break;
+                        try {
+                            change_1.setText(Float.parseFloat(max_text.getText().toString()) * 100 + "--->厘米");
+                            change_2.setText(Float.parseFloat(max_text.getText().toString()) * 10 + "--->分米");
+                            change_3.setText(Float.parseFloat(max_text.getText().toString()) * 3 + "----->尺");
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            min_text.setText("");
+                            max_text.setText("");
+                            change_1.setText("");
+                            change_2.setText("");
+                            change_3.setText("");
+                            e.printStackTrace();
+                            break;
+                        }
+
                     case 2:
                         min_text.setText("立方米转化");
-                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 1000000 +" 立方厘米");
-                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 1000 + "   立方分米");
-                        break;
+                        try {
+                            change_1.setText(Float.parseFloat(max_text.getText().toString()) * 1000000 + "-->立方厘米");
+                            change_2.setText(Float.parseFloat(max_text.getText().toString()) * 1000 + "-->立方分米");
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            min_text.setText("");
+                            max_text.setText("");
+                            change_1.setText("");
+                            change_2.setText("");
+                            change_3.setText("");
+                            e.printStackTrace();
+                            break;
+                        }
                     case 3:
                         min_text.setText("人民币转化");
-                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 0.1466 +  "   美元");
-                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 15.4793 + "   日元");
-                        break;
+                        try {
+                            change_1.setText(Float.parseFloat(max_text.getText().toString()) * 0.1466 + "--->美元");
+                            change_2.setText(Float.parseFloat(max_text.getText().toString()) * 15.4793 + "--->日元");
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            min_text.setText("");
+                            max_text.setText("");
+                            change_1.setText("");
+                            change_2.setText("");
+                            change_3.setText("");
+                            e.printStackTrace();
+                            break;
+                        }
                     case 4:
                         min_text.setText("2进制转化");
-                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 100 +"   8进制");
-                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 10 + "  10进制");
-                        change_3.setText(Float.parseFloat(max_text.getText().toString())* 3 +  "  16进制");
-                        break;
+                        try{
+                            change_1.setText(Integer.toOctalString(Integer.valueOf(max_text.getText().toString(),2)) +"--->8进制 ");
+                            change_2.setText(Integer.valueOf(max_text.getText().toString(),2) +                       "--->10进制");
+                            change_3.setText(Integer.toHexString(Integer.valueOf(max_text.getText().toString(),2)) +  "--->16进制");
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            min_text.setText("");
+                            max_text.setText("");
+                            change_1.setText("");
+                            change_2.setText("");
+                            change_3.setText("");
+                            e.printStackTrace();
+                            break;
+                        }
                     case 5:
 
                     default:
@@ -322,6 +366,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+        });
+        btn_op_CE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                min_text.setText("");
+                max_text.setText("");
+                change_1.setText("");
+                change_2.setText("");
+                change_3.setText("");
+                spinner_change.setSelection(0);
+                spinner_hanshu.setSelection(0);
+            }
         });
     }
     public static int recursion(int num){//利用递归计算阶乘
