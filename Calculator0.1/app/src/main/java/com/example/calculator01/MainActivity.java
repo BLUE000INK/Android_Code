@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText max_text = findViewById(R.id.edittext_max);
         final TextView min_text = findViewById(R.id.textview_min);
+        final TextView change_1 = findViewById(R.id.textview_change_1);
+        final TextView change_2 = findViewById(R.id.textview_change_2);
+        final TextView change_3 = findViewById(R.id.textview_change_3);
 
         Button btn_num_0 = findViewById(R.id.btn_num_0);
         Button btn_num_1 = findViewById(R.id.btn_num_1);
@@ -285,10 +288,16 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 1:
-                        min_text.setText(max_text.getText()+"米 = "+ Float.parseFloat(max_text.getText().toString())* 10 + "分米");
+                        min_text.setText("米转化");
+                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 100 +"  厘米");
+                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 10 + "  分米");
+                        change_3.setText(Float.parseFloat(max_text.getText().toString())* 3 +  "    尺");
                         break;
                     case 2:
-                        min_text.setText(max_text.getText()+"立方米 = "+ Float.parseFloat(max_text.getText().toString())* 1000 + "立方分米");
+                        min_text.setText("立方米转化");
+                        change_1.setText(Float.parseFloat(max_text.getText().toString())* 1000000 +"  厘米");
+                        change_2.setText(Float.parseFloat(max_text.getText().toString())* 1000 + "  分米");
+                        change_3.setText(Float.parseFloat(max_text.getText().toString())* 3 +  "    尺");
                         break;
                     case 3:
                         min_text.setText(max_text.getText()+"人民币 = "+ Float.parseFloat(max_text.getText().toString())*0.1 + "美元");
@@ -308,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
         });
     }
     public static int recursion(int num){//利用递归计算阶乘

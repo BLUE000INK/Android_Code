@@ -15,9 +15,9 @@
 
     <string-array name="items_change">
         <item>转化</item>
-        <item>转为分米</item>
-        <item>转为立方分米</item>
-        <item>转为美元</item>
+        <item>米转化</item>
+        <item>立方米转化</item>
+        <item>人民币转化</item>
         <item>2进制转化</item>
         <item>8进制转化</item>
         <item>10进制转化</item>
