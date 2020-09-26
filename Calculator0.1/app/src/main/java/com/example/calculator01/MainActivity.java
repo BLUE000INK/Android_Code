@@ -354,7 +354,39 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
                     case 5:
-
+                        min_text.setText("8进制转化");
+                        try{
+                            change_1.setText(Integer.toBinaryString(Integer.valueOf(max_text.getText().toString(),8)) +"--->2进制 ");
+                            change_2.setText(Integer.valueOf(max_text.getText().toString(),8) +                       "--->10进制");
+                            change_3.setText(Integer.toHexString(Integer.valueOf(max_text.getText().toString(),8)) +  "--->16进制");
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            min_text.setText("");
+                            max_text.setText("");
+                            change_1.setText("");
+                            change_2.setText("");
+                            change_3.setText("");
+                            e.printStackTrace();
+                            break;
+                        }
+                    case 6:
+                        min_text.setText("10进制转化");
+                        try{
+                            change_1.setText(Integer.toBinaryString(Integer.valueOf(max_text.getText().toString(),10)) +"--->2进制 ");
+                            change_2.setText(Integer.toOctalString(max_text.getText().toString(),2) +                       "--->8进制");
+                            change_3.setText(Integer.toHexString(Integer.valueOf(max_text.getText().toString(),2)) +  "--->16进制");
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            min_text.setText("");
+                            max_text.setText("");
+                            change_1.setText("");
+                            change_2.setText("");
+                            change_3.setText("");
+                            e.printStackTrace();
+                            break;
+                        }
                     default:
                         break;
                 }
