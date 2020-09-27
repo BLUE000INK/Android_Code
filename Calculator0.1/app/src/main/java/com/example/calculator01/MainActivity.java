@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout_port);
 
         final EditText max_text = findViewById(R.id.edittext_max);
         final TextView min_text = findViewById(R.id.textview_min);
