@@ -244,32 +244,86 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 1:
-                        min_text.setText("sin("+max_text.getText()+"`) = "+Math.sin(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
-                        break;
+                        try {
+                            min_text.setText("sin(" + max_text.getText() + "`) = " + Math.sin(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 2:
-                        min_text.setText("cos("+max_text.getText()+"`) = "+Math.cos(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
-                        break;
+                        try {
+                            min_text.setText("cos("+max_text.getText()+"`) = "+Math.cos(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 3:
-                        min_text.setText("tan("+max_text.getText()+"`) = "+Math.tan(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
-                        break;
+                        try {
+                            min_text.setText("tan("+max_text.getText()+"`) = "+Math.tan(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 4:
-                        min_text.setText("asin("+max_text.getText()+"`) = "+Math.asin(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
-                        break;
+                        try {
+                            min_text.setText("asin("+max_text.getText()+"`) = "+Math.asin(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 5:
-                        min_text.setText("acos("+max_text.getText()+"`) = "+Math.acos(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
-                        break;
+                        try {
+                            min_text.setText("acos("+max_text.getText()+"`) = "+Math.acos(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 6:
-                        min_text.setText("atan("+max_text.getText()+"`) = "+Math.atan(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
-                        break;
+                        try {
+                            min_text.setText("atan("+max_text.getText()+"`) = "+Math.atan(Math.toRadians(Double.parseDouble(max_text.getText().toString()))));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 7:
-                        min_text.setText(max_text.getText()+"^2 = "+Math.pow(Double.parseDouble(max_text.getText().toString()),2));
-                        break;
+                        try {
+                            min_text.setText(max_text.getText()+"^2 = "+Math.pow(Double.parseDouble(max_text.getText().toString()),2));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 8:
-                        min_text.setText(max_text.getText()+"! = "+recursion(Integer.parseInt(max_text.getText().toString())));
-                        break;
+                        try {
+                            min_text.setText(max_text.getText()+"! = "+recursion(Integer.parseInt(max_text.getText().toString())));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     case 9:
-                        min_text.setText(max_text.getText()+"开根号 = "+Math.sqrt(Double.parseDouble(max_text.getText().toString())));
-                        break;
+                        try {
+                            min_text.setText(max_text.getText()+"开根号 = "+Math.sqrt(Double.parseDouble(max_text.getText().toString())));
+                            break;
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this,"操作错误！",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            break;
+                        }
                     default:
                         break;
 
