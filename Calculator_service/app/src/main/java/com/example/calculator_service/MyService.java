@@ -39,6 +39,7 @@ public class MyService extends Service {
 
     public class LocalBinder extends Binder {
         MyService getService(){
+            Log.v("mytag","LoacalBinder()");
             return MyService.this;
         }
     }
