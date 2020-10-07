@@ -24,27 +24,26 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Log.v("mytag","线程运行");
                     while(!Thread.interrupted()){
-                        synchronized (this){
-                            try {
-                                int num = Integer.parseInt(editText.getText().toString());
-                                int result = 1;
-                                String str;
-                                for (int i = 2; i < num && result == 1; i++) {
-                                    if (num % i == 0) {
-                                        result = 0;
-                                    }
+                        try {
+                            int num = Integer.parseInt(editText.getText().toString());
+                            int result = 1;
+                            String str;
+                            for (int i = 2; i < num && result == 1; i++) {
+                                if (num % i == 0) {
+                                    result = 0;
                                 }
-                                Log.v("mytag", "result=" + result);
-                                if(result == 0)
-                                    str = "非素数";
-                                else
-                                    str = "素数";
-                                textView.setText(str);
-                                Thread.interrupted();
-                            } catch (Exception e){
-                                e.printStackTrace();
                             }
+                            Log.v("mytag", "result=" + result);
+                            if(result == 0)
+                                str = "非素数";
+                            else
+                                str = "素数";
+                            textView.setText(str);
+                            wait();
+                        } catch (Exception e){
+                            e.printStackTrace();
                         }
+
                     }
                 Log.v("mytag","运算结束");
             }
