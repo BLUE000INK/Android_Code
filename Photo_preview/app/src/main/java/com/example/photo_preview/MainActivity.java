@@ -1,6 +1,5 @@
 package com.example.photo_preview;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageView;
-    private int REQ_1=1;
+    private int REQ_1 = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +28,11 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data) {
+        Log.v("mytag", "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == REQ_1 && resultCode == RESULT_OK) {
-            Log.v("mytag", "图片处理");
-            Bundle bundle = data.getExtras();
-            Bitmap bitmap = (Bitmap) bundle.get("data");
-            imageView.setImageBitmap(bitmap);
-        }
+        Log.v("mytag", "图片处理");
+        Bundle bundle = data.getExtras();
+        Bitmap bitmap = (Bitmap) bundle.get("data");
+        imageView.setImageBitmap(bitmap);
     }
 }
