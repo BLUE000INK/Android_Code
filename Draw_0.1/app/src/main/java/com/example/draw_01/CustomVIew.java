@@ -43,14 +43,14 @@ public class CustomVIew extends View {
                 mBooleanOnTouch = true;
                 listStrokes.add(pathStroke);
                 break;
-            case MotionEvent.ACTION_MOVE:
+            /*case MotionEvent.ACTION_MOVE:
                 if(mBooleanOnTouch){
                     pathStroke.quadTo(oldx,oldy,x,y);
                     oldx = x;
                     oldy = y;
                     drawStrokes();
                 }
-                break;
+                break;*/
             case MotionEvent.ACTION_UP:
                 if(mBooleanOnTouch){
                     pathStroke.quadTo(oldx,oldy,x,y);
@@ -66,17 +66,17 @@ public class CustomVIew extends View {
         if (memCanvas == null) {    //缓冲位
             memBMP = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             memCanvas = new Canvas(); //缓冲画布
-            memCanvas.setBitmap(memBMP); //为画布设置位图，图形实际保存在位图中
+            memCanvas.setBitmap(memBMP); //为画布设置位图，图形实际保存在位图中
             memPaint = new Paint(); //画笔
             memPaint.setAntiAlias(true); //抗锯齿
             memPaint.setColor(Color.RED); //画笔颜色
             memPaint.setStyle(Paint.Style.STROKE); //设置填充类型
-            memPaint.setStrokeWidth(5); //设置画笔宽度
+            memPaint.setStrokeWidth(5); //设置画笔宽度
         }
         for (Path path : listStrokes) {
             memCanvas.drawPath(path, memPaint);
         }
-        invalidate(); //刷新屏幕
+        invalidate(); //刷新屏幕
     }
 
     @Override
