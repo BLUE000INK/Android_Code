@@ -6,11 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ToggleButton
-        android:id="@+id/tbtn_start"
+    <Button
+        android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+    <Button
+        android:id="@+id/btn_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pause"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="pause"
-        app:layout_constraintLeft_toRightOf="@+id/tbtn_start"
+        app:layout_constraintLeft_toRightOf="@+id/btn_start"
         app:layout_constraintBottom_toBottomOf="parent"
         />
     <Button
@@ -29,6 +38,29 @@
         android:layout_height="wrap_content"
         android:text="next"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tbtn_start"
+        app:layout_constraintRight_toLeftOf="@+id/btn_start"
+        />
+    <Button
+        android:id="@+id/btn_loop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="循环"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_next"
+        />
+    <Button
+        android:id="@+id/random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="随机"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_last"
+        />
+
+    <ListView
+        android:id="@+id/list_music"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
