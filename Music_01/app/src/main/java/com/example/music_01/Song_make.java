@@ -12,8 +12,8 @@ public class Song_make {
     public static Song song;
     public static List<Song> getmusic(Context context){
         list = new ArrayList<>();
-
-        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,null,null,null,MediaStore.Audio.AudioColumns.IS_MUSIC);
+        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                , null, null, null, MediaStore.Audio.AudioColumns.IS_MUSIC);
         if(cursor != null){
             while (cursor.moveToNext()){
                 song = new Song();
