@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<>();
         list = Song_make.getmusic(this);
         Log.v(TAG,"list");
+
+        final Button btn_start = findViewById(R.id.btn_start);
+        final Button btn_pause = findViewById(R.id.btn_pause);
+        final Button btn_next = findViewById(R.id.btn_next);
+        final Button btn_last = findViewById(R.id.btn_last);
+        final Button btn_loop = findViewById(R.id.btn_loop);
+
         List_adapter list_adapter = new List_adapter(this, list);
         mylist.setAdapter(list_adapter);
         mylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,32 +52,27 @@ public class MainActivity extends AppCompatActivity {
                 String p = list.get(position).path;//获得歌曲的地址
                 Log.v(TAG,"p="+p);
                 play(p);
+                btn_pause.setText("Pause");
             }
         });
 
-        final Button btn_start = findViewById(R.id.btn_start);
-        final Button btn_pause = findViewById(R.id.btn_pause);
-        final Button btn_next = findViewById(R.id.btn_next);
-        final Button btn_last = findViewById(R.id.btn_last);
-        final Button btn_loop = findViewById(R.id.btn_loop);
 
-        btn_pause.setEnabled(false);
-        btn_next.setEnabled(false);
-        btn_last.setEnabled(false);
-        btn_last.setEnabled(false);
-        btn_loop.setEnabled(false);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mediaPlayer = new MediaPlayer();
+                btn_pause.setText("Play");
                 btn_start.setVisibility(View.INVISIBLE);
                 btn_pause.setVisibility(View.VISIBLE);
                 btn_next.setVisibility(View.VISIBLE);
                 btn_last.setVisibility(View.VISIBLE);
                 btn_loop.setVisibility(View.VISIBLE);
+                mylist.setVisibility(View.VISIBLE);
             }
         });
+
+
     }
     class List_adapter extends BaseAdapter{
         Context context;
