@@ -25,6 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "mytag";
+    private int Num = 0;
     private MediaPlayer mediaPlayer;
     ListView mylist;
     List<Song> list;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String p = list.get(position).path;//获得歌曲的地址
+                Num = position;
                 Log.v(TAG,"p="+p);
                 play(p);
                 btn_pause.setText("Pause");
@@ -72,7 +74,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mediaPlayer.isPlaying()){
+                    btn_pause.setText("Play");
+                    mediaPlayer.pause();
+                }else{
+                    btn_pause.setText("Pause");
+                    String p = list.get(Num).path;//获得歌曲的地址
+                    play(p);
+                }
+            }
+        });
 
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Num == list.size() - 1){
+                    Num = 0;
+                }else{
+                    Num++;
+                }
+                String p = list.get(Num).path;
+                play(p);
+            }
+        });
+
+        btn_last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG,"Num="+Num);
+                Log.v(TAG,"list.size="+list.size());
+                if(Num == 0){
+                    Num = 0;
+                }else{
+                    Num--;
+                }
+                String p = list.get(Num).path;
+                play(p);
+            }
+        });
     }
     class List_adapter extends BaseAdapter{
         Context context;
@@ -126,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void play(String path) {
-        mediaPlayer.reset();
         try {
+            mediaPlayer.reset();
             mediaPlayer.setDataSource(path);
             mediaPlayer.prepare();
             mediaPlayer.start();
