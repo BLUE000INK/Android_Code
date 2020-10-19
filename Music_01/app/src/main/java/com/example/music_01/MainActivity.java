@@ -2,6 +2,7 @@ package com.example.music_01;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         final Button btn_last = findViewById(R.id.btn_last);
         final Button btn_loop = findViewById(R.id.btn_loop);
 
-        List_adapter list_adapter = new List_adapter(this, list);
+        final List_adapter list_adapter = new List_adapter(this, list);
         mylist.setAdapter(list_adapter);
         mylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                     btn_pause.setText("Pause");
                     String p = list.get(Num).path;//获得歌曲的地址
                     play(p);
+
+
                 }
             }
         });
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 play(p);
             }
         });
+
 
         btn_last.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,14 +162,12 @@ public class MainActivity extends AppCompatActivity {
 
             myholder.t_duration.setText(time);
             myholder.t_position.setText(position + 1 + "");
-
             return convertView;
         }
         class Myholder{
             TextView t_position,t_song,t_singer,t_duration;
         }
     }
-
 
     public void play(String path) {
         try {
