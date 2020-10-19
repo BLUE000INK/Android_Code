@@ -17,17 +17,24 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "mytag";
     private int Num = 0;
     private MediaPlayer mediaPlayer;
+    private boolean isSeekBarChanging;
+    private int currentPosition;
+    private Timer timer;
+
     ListView mylist;
     List<Song> list;
     @Override
@@ -45,6 +52,26 @@ public class MainActivity extends AppCompatActivity {
         final Button btn_next = findViewById(R.id.btn_next);
         final Button btn_last = findViewById(R.id.btn_last);
         final Button btn_loop = findViewById(R.id.btn_loop);
+        final Button btn_random = findViewById(R.id.btn_random);
+        final TextView textView = findViewById(R.id.text_name);
+        final SeekBar seekBar = findViewById(R.id.seekbar_time);
+
+        seekBar.setOnSeekBarChangeListener(new MySeekBar());
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(mediaPlayer != null){
+                    if(!isSeekBarChanging){
+                        seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                    }
+                }else{
+                    seekBar.setProgress(0);
+                }
+
+            }
+        },0,50);
+
 
         final List_adapter list_adapter = new List_adapter(this, list);
         mylist.setAdapter(list_adapter);
@@ -55,9 +82,14 @@ public class MainActivity extends AppCompatActivity {
                 Num = position;
                 Log.v(TAG,"p="+p);
                 play(p);
+                seekBar.setVisibility(View.VISIBLE);
+                seekBar.setMax(mediaPlayer.getDuration());
+                textView.setText(list.get(Num).song);
                 btn_pause.setText("Pause");
+                mylist.setSelection(Num);
             }
         });
+
 
 
 
@@ -71,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 btn_next.setVisibility(View.VISIBLE);
                 btn_last.setVisibility(View.VISIBLE);
                 btn_loop.setVisibility(View.VISIBLE);
+                btn_random.setVisibility(View.VISIBLE);
                 mylist.setVisibility(View.VISIBLE);
             }
         });
@@ -80,13 +113,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()){
                     btn_pause.setText("Play");
+
                     mediaPlayer.pause();
                 }else{
                     btn_pause.setText("Pause");
                     String p = list.get(Num).path;//获得歌曲的地址
                     play(p);
-
-
+                    seekBar.setVisibility(View.VISIBLE);
+                    textView.setText(list.get(Num).song);
                 }
             }
         });
@@ -101,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 String p = list.get(Num).path;
                 play(p);
+                textView.setText(list.get(Num).song);
+
             }
         });
 
@@ -117,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 String p = list.get(Num).path;
                 play(p);
+                textView.setText(list.get(Num).song);
+                
             }
         });
     }
@@ -177,6 +215,22 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.start();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public class MySeekBar implements SeekBar.OnSeekBarChangeListener {
+
+        public void onProgressChanged(SeekBar seekBar, int progress,
+                                      boolean fromUser) {
+        }
+
+        /*滚动时,应当暂停后台定时器*/
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            isSeekBarChanging = true;
+        }
+        /*滑动结束后，重新设置值*/
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            isSeekBarChanging = false;
+            mediaPlayer.seekTo(seekBar.getProgress());
         }
     }
 }
