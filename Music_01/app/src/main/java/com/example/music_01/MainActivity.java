@@ -24,16 +24,19 @@ import android.widget.ToggleButton;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "mytag";
     private int Num = 0;
+    private Boolean B_loop = true;
     private MediaPlayer mediaPlayer;
     private boolean isSeekBarChanging;
     private int currentPosition;
     private Timer timer;
+    Random random = new Random();
 
     ListView mylist;
     List<Song> list;
@@ -86,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 seekBar.setMax(mediaPlayer.getDuration());
                 textView.setText(list.get(Num).song);
                 btn_pause.setText("Pause");
-                mylist.setSelection(Num);
             }
         });
 
@@ -113,12 +115,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()){
                     btn_pause.setText("Play");
-
+                    currentPosition = mediaPlayer.getCurrentPosition();
                     mediaPlayer.pause();
                 }else{
                     btn_pause.setText("Pause");
                     String p = list.get(Num).path;//获得歌曲的地址
-                    play(p);
+                    try {
+                        mediaPlayer.reset();
+                        mediaPlayer.setDataSource(p);
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                        seekBar.setMax(mediaPlayer.getDuration());
+                        mediaPlayer.seekTo(currentPosition);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     seekBar.setVisibility(View.VISIBLE);
                     textView.setText(list.get(Num).song);
                 }
@@ -135,8 +146,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 String p = list.get(Num).path;
                 play(p);
+                seekBar.setMax(mediaPlayer.getDuration());
                 textView.setText(list.get(Num).song);
-
+                seekBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -153,8 +165,36 @@ public class MainActivity extends AppCompatActivity {
                 }
                 String p = list.get(Num).path;
                 play(p);
+                seekBar.setMax(mediaPlayer.getDuration());
                 textView.setText(list.get(Num).song);
-                
+                seekBar.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        btn_loop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(B_loop){
+                    B_loop = false;
+                    btn_loop.setText("顺序");
+                    mediaPlayer.setLooping(false);
+                }else{
+                    B_loop = true;
+                    btn_loop.setText("循环");
+                    mediaPlayer.setLooping(true);
+                }
+            }
+        });
+
+        btn_random.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String p = list.get(random.nextInt(list.size())).path;
+                play(p);
+                seekBar.setMax(mediaPlayer.getDuration());
+                textView.setText(list.get(Num).song);
+                seekBar.setVisibility(View.VISIBLE);
             }
         });
     }
