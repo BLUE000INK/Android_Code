@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.english_words01.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_A"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="查找"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_B"
+        android:orderInCategory="100"
+        android:title="新增"
         app:showAsAction="never" />
 </menu>
