@@ -1,29 +1,32 @@
 package com.example.english_words01;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,14 +39,17 @@ public class MainActivity extends AppCompatActivity {
     WordsDBHelper mDbHelper;
     private ListView list;
     private final static String TAG = "mytag";
-
+    //判断横屏
+    private Configuration mConfiguration;
+    private int ori;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
+        ori = mConfiguration.orientation; //获取屏幕方向
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
         list = findViewById(R.id.list_words);
         //registerForContextMenu(list);
         //更新单词列表
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                if(ori == mConfiguration.ORIENTATION_LANDSCAPE){
+                    TextView t3 = v.findViewById(R.id.text_words);
+                    TextView t4 = v.findViewById(R.id.text_notes);
+                    TextView t5 = v.findViewById(R.id.text_eg);
+                    String words = t3.getText().toString();
+                    Log.v(TAG,"prewords="+words);
+                    String notes =  t4.getText().toString();
+                    String eg =  t5.getText().toString();
+                    TextView pre1 = findViewById(R.id.text_pre_words);
+                    TextView pre2 = findViewById(R.id.text_pre_notes);
+                    TextView pre3 = findViewById(R.id.text_pre_eg);
+                    pre1.setText(words);
+                    pre2.setText(notes);
+                    pre3.setText(eg);
+                }
+            }
+        });
         mDbHelper = new WordsDBHelper(this);
         Log.v(TAG,"更新列表前");
         refreshWordsList(list);
@@ -98,26 +127,73 @@ public class MainActivity extends AppCompatActivity {
                 .show();//显示对话框
     }
 
-    //删除对话框
-    private void DeleteDialog(final String strId) {
-        new AlertDialog.Builder(this).setTitle("删除单词").setMessage("是否真的删除单词?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //既可以使用Sql语句删除，也可以使用使用delete方法删除
-                Delete(strId);
+    //修改对话框
+    private void UpdateDialog(final String strId, final String strWord, final String strMeaning, final String strSample) {
+        final TableLayout tableLayout = (TableLayout) getLayoutInflater().inflate(R.layout.insert, null);
+        ((EditText) tableLayout.findViewById(R.id.txtWord)).setText(strWord);
+        ((EditText) tableLayout.findViewById(R.id.txtMeaning)).setText(strMeaning);
+        ((EditText) tableLayout.findViewById(R.id.txtSample)).setText(strSample);
+        new AlertDialog.Builder(this)
+                .setTitle("修改单词")//标题
+                .setView(tableLayout)//设置视图
+                //确定按钮及其动作
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String strNewWord = ((EditText) tableLayout.findViewById(R.id.txtWord)).getText().toString();
+                        String strNewMeaning = ((EditText) tableLayout.findViewById(R.id.txtMeaning)).getText().toString();
+                        String strNewSample = ((EditText) tableLayout.findViewById(R.id.txtSample)).getText().toString();
 
-                //单词已经删除，更新显示列表
-                refreshWordsList(list);
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+                        //既可以使用Sql语句更新，也可以使用使用update方法更新
 
-            }
-        }).create().show();
+                        Update(strId, strWord, strNewMeaning, strNewSample);
+
+                        //单词已经更新，更新显示列表
+                        refreshWordsList(list);
+                    }
+                })
+                //取消按钮及其动作
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .create()//创建对话框
+                .show();//显示对话框
+
+
     }
 
+    //查找对话框
+    private void SearchDialog() {
+        final TableLayout tableLayout = (TableLayout) getLayoutInflater().inflate(R.layout.search, null);
+        new AlertDialog.Builder(this)
+                .setTitle("查找单词")//标题
+                .setView(tableLayout)//设置视图
+                //确定按钮及其动作
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String txtSearchWord = ((EditText) tableLayout.findViewById(R.id.txtSearchWord)).getText().toString();
 
+                        //单词已经插入到数据库，更新显示列表
+                        search_list(txtSearchWord);
+                    }
+                })
+                //取消按钮及其动作
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .create()//创建对话框
+                .show();//显示对话框
+
+    }
+
+    //更新列表
     private void refreshWordsList(ListView list) {
         if (mDbHelper != null) {
             Log.v(TAG,"mDbHelper不为空");
@@ -129,12 +205,86 @@ public class MainActivity extends AppCompatActivity {
                     new int[]{R.id.text_id, R.id.text_words,R.id.text_notes,R.id.text_eg});
             Log.v(TAG,"配置Adapter");
             list.setAdapter(adapter);
+            this.registerForContextMenu(list);
         }else{
             Log.v(TAG,"mDbHelper为空");
             Toast.makeText(this,"Not found", Toast.LENGTH_LONG).show();
         }
     }
 
+    private void search_list(String strWord){
+        ArrayList<Map<String,String>> items = getAllWords();
+        if (items != null) {
+            ArrayList<Map<String, String>> search_item = Search(strWord);
+            if(search_item.size()>0){
+                Log.v(TAG,"search_item.size()="+search_item.size());
+                SimpleAdapter adapter = new SimpleAdapter(this, search_item, R.layout.words_items,
+                        new String[]{Words.Word._ID, Words.Word.COLUMN_NAME_WORD},
+                        new int[]{R.id.text_id, R.id.text_words});
+
+                list.setAdapter(adapter);
+            }else{
+                Toast.makeText(this,"Not found",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("词条操作");
+        menu.add(1,1,1,"删除");
+        menu.add(1,2,1,"修改");
+        menu.add(1,3,1,"扩展");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
+        item.getMenuInfo();
+        int q = (int)info.id;
+        Log.v(TAG,"q="+q);
+        View v1 = list.getChildAt(q);
+        TextView t2 = v1.findViewById(R.id.text_id);
+        TextView t3 = v1.findViewById(R.id.text_words);
+        TextView t4 = v1.findViewById(R.id.text_notes);
+        TextView t5 = v1.findViewById(R.id.text_eg);
+        String id = t2.getText().toString();
+        String words = t3.getText().toString();
+        String notes =  t4.getText().toString();
+        String eg =  t5.getText().toString();
+        switch(item.getItemId()){
+            case 1:
+                Delete(id);
+                Toast.makeText(MainActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
+                refreshWordsList(list);
+                break;
+            case 2:
+                UpdateDialog(id,words,notes,eg);
+                Toast.makeText(MainActivity.this,"点击修改",Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                Toast.makeText(MainActivity.this,"跳转中",Toast.LENGTH_LONG).show();
+                jumpBrowser("http://m.youdao.com/dict?le=eng&q="+words);
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    //网页搜索跳转
+    public  void jumpBrowser(String value) {
+        /* 取得网页搜寻的intent */
+        Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
+        search.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        search.putExtra(SearchManager.QUERY, value);
+        final Bundle appData = getIntent().getBundleExtra(SearchManager.APP_DATA);
+        if (appData != null) {
+            search.putExtra(SearchManager.APP_DATA, appData);
+        }
+        startActivity(search);
+    }
+
+    //获取数据库数据
     private ArrayList<Map<String, String>> getAllWords() {
         if(mDbHelper == null){
             Log.v(TAG,"mDbHelper == null");
@@ -164,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG,"Cursor c");
         return Cursor_WordList(c);
     }
-
+    //将cursor转为列表数据
     private ArrayList<Map<String, String>> Cursor_WordList(Cursor c) {
         ArrayList<Map<String,String>> result = new ArrayList<>();
         while(c.moveToNext()){
@@ -185,6 +335,19 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+    private ArrayList<Map<String, String>> Cursor_WordList2(Cursor cursor) {
+        ArrayList<Map<String, String>> result = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Map<String, String> map = new HashMap<>();
+            map.put(Words.Word._ID, String.valueOf(cursor.getString(cursor.getColumnIndex(Words.Word._ID))));
+            Log.v(TAG,"search = "+Words.Word.COLUMN_NAME_WORD);
+            map.put(Words.Word.COLUMN_NAME_WORD, cursor.getString(cursor.getColumnIndex(Words.Word.COLUMN_NAME_WORD)));
+            Log.v(TAG,"search = "+Words.Word.COLUMN_NAME_WORD);
+            result.add(map);
+        }
+        return result;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -201,8 +364,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_A) {
+        if (id == R.id.action_search) {
+            SearchDialog();
             return true;
+        }else if(id == R.id.action_quit){
+            System.exit(0);
+        }else if(id == R.id.action_main){
+            refreshWordsList(list);
+        }else if(id == R.id.action_help){
+            Toast.makeText(this,"这里是帮助",Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -252,6 +422,15 @@ public class MainActivity extends AppCompatActivity {
         db.delete(Words.Word.TABLE_NAME, selection, selectionArgs);
     }
 
+    public ArrayList<Map<String, String>> Search(String strWord){
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String sql = "select * from words where word like ? order by word desc";
+        Cursor c = db.rawQuery(sql, new String[]{"%" + strWord + "%"});
+
+        return Cursor_WordList2(c);
+    }
+
     public void Update(String strId, String strWord, String strMeaning, String strSample) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -271,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
                 selectionArgs);
     }
 
-    
+
     //关闭数据库
     @Override
     protected void onDestroy() {

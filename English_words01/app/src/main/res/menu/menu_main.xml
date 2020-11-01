@@ -3,13 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.english_words01.MainActivity">
     <item
-        android:id="@+id/action_A"
+        android:id="@+id/action_main"
+        android:orderInCategory="100"
+        android:title="词库"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_search"
         android:orderInCategory="100"
         android:title="查找"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_B"
+        android:id="@+id/action_help"
         android:orderInCategory="100"
-        android:title="新增"
+        android:title="帮助"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_quit"
+        android:orderInCategory="100"
+        android:title="退出"
         app:showAsAction="never" />
 </menu>
