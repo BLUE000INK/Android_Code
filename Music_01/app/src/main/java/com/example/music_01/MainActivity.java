@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     ListView mylist;
     List<Song> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mylist = findViewById(R.id.list_music);
         list = new ArrayList<>();
         list = Song_make.getmusic(this);
-        Log.v(TAG,"list");
+        Log.v(TAG, "list");
 
         final Button btn_start = findViewById(R.id.btn_start);
         final Button btn_pause = findViewById(R.id.btn_pause);
@@ -59,21 +60,22 @@ public class MainActivity extends AppCompatActivity {
         final TextView textView = findViewById(R.id.text_name);
         final SeekBar seekBar = findViewById(R.id.seekbar_time);
 
+        //进度条监听事件
         seekBar.setOnSeekBarChangeListener(new MySeekBar());
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(mediaPlayer != null){
-                    if(!isSeekBarChanging){
+                if (mediaPlayer != null) {
+                    if (!isSeekBarChanging) {
                         seekBar.setProgress(mediaPlayer.getCurrentPosition());
                     }
-                }else{
+                } else {
                     seekBar.setProgress(0);
                 }
 
             }
-        },0,50);
+        }, 0, 50);
 
 
         final List_adapter list_adapter = new List_adapter(this, list);
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String p = list.get(position).path;//获得歌曲的地址
                 Num = position;
-                Log.v(TAG,"p="+p);
+                Log.v(TAG, "p=" + p);
                 play(p);
                 seekBar.setVisibility(View.VISIBLE);
                 seekBar.setMax(mediaPlayer.getDuration());
@@ -93,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
+        //开启预加载MediaPlayer
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,14 +111,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //播放暂停按钮
         btn_pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mediaPlayer.isPlaying()){
+                if (mediaPlayer.isPlaying()) {
                     btn_pause.setText("Play");
                     currentPosition = mediaPlayer.getCurrentPosition();
                     mediaPlayer.pause();
-                }else{
+                } else {
                     btn_pause.setText("Pause");
                     String p = list.get(Num).path;//获得歌曲的地址
                     try {
@@ -136,12 +138,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //下一曲
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Num == list.size() - 1){
+                if (Num == list.size() - 1) {
                     Num = 0;
-                }else{
+                } else {
                     Num++;
                 }
                 String p = list.get(Num).path;
@@ -153,14 +156,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //上一曲
         btn_last.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(TAG,"Num="+Num);
-                Log.v(TAG,"list.size="+list.size());
-                if(Num == 0){
+                Log.v(TAG, "Num=" + Num);
+                Log.v(TAG, "list.size=" + list.size());
+                if (Num == 0) {
                     Num = 0;
-                }else{
+                } else {
                     Num--;
                 }
                 String p = list.get(Num).path;
@@ -172,14 +176,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //循环按钮
         btn_loop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(B_loop){
+                if (B_loop) {
                     B_loop = false;
                     btn_loop.setText("顺序");
                     mediaPlayer.setLooping(false);
-                }else{
+                } else {
                     B_loop = true;
                     btn_loop.setText("循环");
                     mediaPlayer.setLooping(true);
@@ -198,13 +203,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    class List_adapter extends BaseAdapter{
+
+    class List_adapter extends BaseAdapter {
         Context context;
-        List<Song>list;
-        public List_adapter(MainActivity mainActivity,List<Song>list){
+        List<Song> list;
+
+        public List_adapter(MainActivity mainActivity, List<Song> list) {
             this.context = mainActivity;
             this.list = list;
         }
+
         @Override
         public int getCount() {
             return list.size();
@@ -223,15 +231,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Myholder myholder;
-            if(convertView == null){
+            if (convertView == null) {
                 myholder = new Myholder();
-                convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_text,null);
+                convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_text, null);
                 myholder.t_position = convertView.findViewById(R.id.t_postion);
                 myholder.t_song = convertView.findViewById(R.id.t_song);
                 myholder.t_singer = convertView.findViewById(R.id.t_singer);
                 myholder.t_duration = convertView.findViewById(R.id.t_duration);
                 convertView.setTag(myholder);
-            }else {
+            } else {
                 myholder = (Myholder) convertView.getTag();
             }
             myholder.t_song.setText(list.get(position).song.toString());
@@ -242,8 +250,9 @@ public class MainActivity extends AppCompatActivity {
             myholder.t_position.setText(position + 1 + "");
             return convertView;
         }
-        class Myholder{
-            TextView t_position,t_song,t_singer,t_duration;
+
+        class Myholder {
+            TextView t_position, t_song, t_singer, t_duration;
         }
     }
 
@@ -257,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     public class MySeekBar implements SeekBar.OnSeekBarChangeListener {
 
         public void onProgressChanged(SeekBar seekBar, int progress,
@@ -267,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         public void onStartTrackingTouch(SeekBar seekBar) {
             isSeekBarChanging = true;
         }
+
         /*滑动结束后，重新设置值*/
         public void onStopTrackingTouch(SeekBar seekBar) {
             isSeekBarChanging = false;

@@ -10,6 +10,7 @@ import java.util.List;
 public class Song_make {
     public static List<Song> list;
     public static Song song;
+    //从多媒体数据库中获取歌曲
     public static List<Song> getmusic(Context context){
         list = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
